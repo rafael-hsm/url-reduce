@@ -7,7 +7,13 @@ from devpro.shortener.models import UrlRedirect
 
 
 def report_url(request, slug):
-    return render(request, 'shortener/report.html')
+    url_redirect = UrlRedirect.objects.get(slug=slug)
+    url_reduce = request.build_absolute_uri(f'/{slug}')
+    contexto = {
+        'reduce': url_redirect,
+        'url_reduce': url_reduce
+    }
+    return render(request, 'shortener/report.html', contexto)
 
 
 def redirect_url(request, slug):
